@@ -28,11 +28,11 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <TextBox x:Name="tbMainFileName" Margin="21,0,10,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
-                <TextBox x:Name="tbMainFileMD5" HorizontalAlignment="Left" Margin="21,23,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="230"/>
+                <TextBox x:Name="tbMainFileName" Margin="10,0,10,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+                <TextBox x:Name="tbMainFileMD5" HorizontalAlignment="Left" Margin="10,23,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="230"/>
             </Grid>
         </GroupBox>
-        <GroupBox Header="MD5 File" Margin="35,78,14,0" Height="65" VerticalAlignment="Top">
+        <GroupBox Header="MD5 File Contents" Margin="35,78,14,0" Height="65" VerticalAlignment="Top">
             <Grid>
                 <TextBox x:Name="tbMD5FileName" Margin="21,0,10,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
                 <TextBox x:Name="tbMD5FileContents" HorizontalAlignment="Left" Margin="21,23,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="230"/>
