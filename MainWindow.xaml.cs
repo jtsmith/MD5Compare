@@ -50,7 +50,7 @@ namespace MD5Compare
             }
         }
 
-        // Return the hash value of a specific file stored in the specified digest file
+        // Return the hash value for a specific filename stored in the specified MD5 digest file
         public string GetHashFromFile(string digestFilePath, string targetFileName)
         {
             // Loop through every line in the digest file    
@@ -74,7 +74,8 @@ namespace MD5Compare
             return "No matching MD5 digest found in file";
         }
 
-        private void Window_Drop(object sender, DragEventArgs e)
+        // When a file is dragged into the window, calculate its MD5 and move the previous main file info to the comparison boxes
+        private async void Window_Drop(object sender, DragEventArgs e)
         {
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
 
@@ -102,9 +103,17 @@ namespace MD5Compare
             }
 
             // Perform hash function on the main file
-            this.Cursor = Cursors.Wait;
-            tbMainFileMD5.Text = HashFile(files[0]);
-            this.Cursor = Cursors.Arrow;
+            Mouse.OverrideCursor = Cursors.Wait;
+            try
+            {
+                var md5 = await Task.Run(() => HashFile(files[0])); // heavy work offloaded from UI thread
+                tbMainFileMD5.Text = md5;
+            }
+            finally
+            {
+                Mouse.OverrideCursor = null; // restore cursor
+            }
+
             Update_Status();
         }
 
