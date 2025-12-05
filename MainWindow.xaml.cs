@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using System.Diagnostics;
 using System.Security.Cryptography;
 using System.IO;
+using System.Windows.Threading;
 
 namespace MD5Compare
 {
@@ -23,10 +24,20 @@ namespace MD5Compare
     /// </summary>
     public partial class MainWindow : Window
     {
+        // Timer to poll the clipboard
+        private readonly DispatcherTimer _clipboardTimer;
+        private string _lastClipboardText = string.Empty;
+
         public MainWindow()
         {
             InitializeComponent();
             this.AllowDrop = true;
+
+            // Monitor the clipboard every second
+            _clipboardTimer = new DispatcherTimer();
+            _clipboardTimer.Interval = TimeSpan.FromSeconds(1);
+            _clipboardTimer.Tick += ClipboardTimer_Tick;
+            _clipboardTimer.Start();
         }
 
         // Return the hash digest of a file
@@ -94,8 +105,19 @@ namespace MD5Compare
             this.Cursor = Cursors.Wait;
             tbMainFileMD5.Text = HashFile(files[0]);
             this.Cursor = Cursors.Arrow;
+            Update_Status();
+        }
 
-            #region UpdateStatus
+        private void Update_Status()
+        {
+            if (tbMainFileMD5.Text == string.Empty)
+            {
+                tbMD5FileStatus.Text = string.Empty;
+                tbComparisonFileStatus.Text = string.Empty;
+                tbClipboardStatus.Text = string.Empty;
+                return;
+            }
+
             if (tbMD5FileContents.Text == tbMainFileMD5.Text)
             {
                 tbMD5FileStatus.Text = "\u2713";
@@ -147,7 +169,78 @@ namespace MD5Compare
 
             }
 
-            #endregion
         }
+
+        // Poll the system clipboard every second and update tbClipboardMD5 when the clipboard text changes
+        private void ClipboardTimer_Tick(object? sender, EventArgs e)
+        {
+            string clipText = string.Empty;
+            try
+            {
+                if (Clipboard.ContainsText())
+                {
+                    clipText = Clipboard.GetText();
+                }
+            }
+            catch
+            {
+                // Clipboard may be in use by another process; ignore this tick
+                return;
+            }
+
+            if (clipText == null) clipText = string.Empty;
+
+            if (!string.Equals(clipText, _lastClipboardText, StringComparison.Ordinal))
+            {
+                _lastClipboardText = clipText;
+
+                // Take the first 32 characters and paste into the textbox
+                string first32 = clipText.Length <= 32 ? clipText : clipText.Substring(0, 32);
+                tbClipboardMD5.Text = first32.Trim().ToUpper();
+                Update_Status();
+            }
+        }
+
+        // Clear button click handler to reset UI to initial empty state
+        private void BtnClear_Click(object sender, RoutedEventArgs e)
+        {
+            // Stop timer while clearing to avoid race with clipboard ticks
+            try
+            {
+                if (_clipboardTimer != null && _clipboardTimer.IsEnabled)
+                {
+                    _clipboardTimer.Stop();
+                }
+            }
+            catch
+            {
+                // ignore
+            }
+
+            tbClipboardMD5.Text = string.Empty;
+            tbClipboardStatus.Text = string.Empty;
+            tbMainFileName.Text = string.Empty;
+            tbMainFileMD5.Text = string.Empty;
+            tbMD5FileName.Text = string.Empty;
+            tbMD5FileContents.Text = string.Empty;
+            tbMD5FileStatus.Text = string.Empty;
+            tbCompareFileName.Text = string.Empty;
+            tbCompareFileMD5.Text = string.Empty;
+            tbComparisonFileStatus.Text = string.Empty;
+
+            _lastClipboardText = string.Empty;
+
+            Update_Status();
+
+            try
+            {
+                _clipboardTimer?.Start();
+            }
+            catch
+            {
+                // ignore
+            }
+        }
+
     }
 }

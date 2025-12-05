@@ -5,48 +5,52 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MD5Compare"
         mc:Ignorable="d"
-        Title="MD5 Compare" Width="461" MinHeight="310" Drop="Window_Drop" MinWidth="330" Height="310" MaxHeight="310">
-    <Grid>
+        Title="MD5 Compare" Width="461" MinHeight="310" Drop="Window_Drop" MinWidth="350" Height="310" MaxHeight="310">
+    <Grid Margin="10,0,10,1">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="150*"/>
+            <RowDefinition Height="143*"/>
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <GroupBox Header="Clipboard" Margin="35,218,14,0" Height="47" VerticalAlignment="Top">
-            <Grid HorizontalAlignment="Left" Width="402" Height="25">
+        <GroupBox Header="Clipboard Contents" Margin="52,76,-3,0" Height="47" VerticalAlignment="Top" Grid.Row="1">
+            <Grid HorizontalAlignment="Left" Width="382" Height="25">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="29*"/>
                     <ColumnDefinition Width="38*"/>
                 </Grid.ColumnDefinitions>
-                <TextBox x:Name="tbClipboardMD5" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Width="227" Margin="22,0,0,0" Grid.ColumnSpan="2"/>
+                <TextBox x:Name="tbClipboardMD5" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Width="227" Margin="22,0,0,0" Grid.ColumnSpan="2" IsReadOnly="True"/>
                 <TextBox x:Name="tbClipboardStatus" HorizontalAlignment="Left" TextWrapping="Wrap" Width="16" Margin="0,1,0,0" FontSize="14" BorderBrush="{x:Null}" Height="20" VerticalAlignment="Top"/>
             </Grid>
         </GroupBox>
-        <GroupBox Header="Main File" Margin="35,8,14,0" Height="65" VerticalAlignment="Top">
-            <Grid>
+        <GroupBox Header="Main File Hash" Margin="52,3,-3,0" Height="65" VerticalAlignment="Top">
+            <Grid Margin="0,0,4,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <TextBox x:Name="tbMainFileName" Margin="10,0,10,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
-                <TextBox x:Name="tbMainFileMD5" HorizontalAlignment="Left" Margin="10,23,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="230"/>
+                <TextBox x:Name="tbMainFileMD5" HorizontalAlignment="Left" Margin="10,23,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="230" IsReadOnlyCaretVisible="True" IsReadOnly="True"/>
             </Grid>
         </GroupBox>
-        <GroupBox Header="MD5 File Contents" Margin="35,78,14,0" Height="65" VerticalAlignment="Top">
-            <Grid>
+        <GroupBox Header="MD5 File Contents" Margin="52,73,-3,0" Height="65" VerticalAlignment="Top">
+            <Grid Margin="0,0,-2,0">
                 <TextBox x:Name="tbMD5FileName" Margin="21,0,10,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
-                <TextBox x:Name="tbMD5FileContents" HorizontalAlignment="Left" Margin="21,23,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="230"/>
+                <TextBox x:Name="tbMD5FileContents" HorizontalAlignment="Left" Margin="21,23,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="230" IsReadOnly="True"/>
                 <TextBox x:Name="tbMD5FileStatus" HorizontalAlignment="Left" Margin="0,21,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="16" BorderBrush="{x:Null}" FontSize="14" Height="20"/>
             </Grid>
         </GroupBox>
-        <GroupBox Header="Comparison File" Margin="35,148,14,0" Height="65" VerticalAlignment="Top">
-            <Grid>
+        <GroupBox Header="Comparison File Hash" Margin="52,6,-3,0" Height="65" VerticalAlignment="Top" Grid.Row="1">
+            <Grid Margin="0,0,-2,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="31*"/>
                     <ColumnDefinition Width="69*"/>
                 </Grid.ColumnDefinitions>
                 <TextBox x:Name="tbCompareFileName" Margin="21,0,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.ColumnSpan="2" Height="18"/>
-                <TextBox x:Name="tbCompareFileMD5" HorizontalAlignment="Left" Margin="21,23,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="230" Grid.ColumnSpan="2" Height="18"/>
+                <TextBox x:Name="tbCompareFileMD5" HorizontalAlignment="Left" Margin="21,23,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="230" Grid.ColumnSpan="2" Height="18" IsReadOnly="True"/>
                 <TextBox x:Name="tbComparisonFileStatus" HorizontalAlignment="Left" Margin="0,20,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="16" Height="21" FontSize="14" BorderBrush="{x:Null}"/>
             </Grid>
         </GroupBox>
-
+        <Button x:Name="btnClear" Content="Clear" Width="38" Height="24" HorizontalAlignment="Left" VerticalAlignment="Top" Click="BtnClear_Click" Margin="0,10,0,0"/>
     </Grid>
 </Window>
