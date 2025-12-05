@@ -16,11 +16,8 @@
                     <ColumnDefinition Width="29*"/>
                     <ColumnDefinition Width="38*"/>
                 </Grid.ColumnDefinitions>
-                <TextBox x:Name="tbMainFileMD5_Copy2" HorizontalAlignment="Left" Margin="0,24,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="16" Height="18"/>
-                <TextBox x:Name="tbMainFileMD5_Copy3" HorizontalAlignment="Left" Margin="0,24,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="16" Height="18"/>
-                <TextBox x:Name="tbMainFileMD5_Copy4" HorizontalAlignment="Left" Margin="0,24,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="16" Height="18"/>
                 <TextBox x:Name="tbClipboardMD5" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Width="227" Margin="22,0,0,0" Grid.ColumnSpan="2"/>
-                <TextBox x:Name="tbClipboardStatus" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="16" Height="20" Margin="0,1,0,0" FontSize="14" BorderBrush="{x:Null}"/>
+                <TextBox x:Name="tbClipboardStatus" HorizontalAlignment="Left" TextWrapping="Wrap" Width="16" Margin="0,1,0,0" FontSize="14" BorderBrush="{x:Null}" Height="20" VerticalAlignment="Top"/>
             </Grid>
         </GroupBox>
         <GroupBox Header="Main File" Margin="35,8,14,0" Height="65" VerticalAlignment="Top">
